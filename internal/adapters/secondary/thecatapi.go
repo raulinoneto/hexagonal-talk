@@ -10,7 +10,10 @@ import (
 	"github.com/lucasrosa/catvotes/internal/domains/votes"
 )
 
-type votesAPI struct{}
+type votesAPI struct {
+	ImageID string `json:"image_id"`
+	Value   int    `json:"value"`
+}
 
 // NewDynamoRepository instantiates the repository for this adapter
 func NewVotesAPI() votes.SecondaryPort {
@@ -21,7 +24,13 @@ func (a *votesAPI) SaveVote(v votes.Vote) error {
 	url := "https://api.thecatapi.com/v1/votes"
 	fmt.Println("URL:>", url)
 
-	jsonStr, err := json.Marshal(v)
+	a.ImageID = v.ImageID
+	a.Value = 0
+	if v.Vote {
+		a.Value = 1
+	}
+
+	jsonStr, err := json.Marshal(*a)
 	if err != nil {
 		return err
 	}

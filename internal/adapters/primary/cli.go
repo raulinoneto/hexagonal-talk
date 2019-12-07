@@ -11,8 +11,8 @@ type CLIPrimaryAdapter struct {
 	service votes.PrimaryPort
 }
 
-func NewCLIPrimaryAdapter(s votes.PrimaryPort) *APIGatewayPrimaryAdapter {
-	return &APIGatewayPrimaryAdapter{
+func NewCLIPrimaryAdapter(s votes.PrimaryPort) *CLIPrimaryAdapter {
+	return &CLIPrimaryAdapter{
 		s,
 	}
 }
@@ -33,7 +33,7 @@ func (a *CLIPrimaryAdapter) HandleVote() (string, error) {
 		message = "Vote Decreased"
 	}
 
-	if !v.Vote && clientVote != 1 {
+	if !v.Vote && clientVote != 0 {
 		return "", fmt.Errorf("Vote only allows 1 or 0")
 	}
 
