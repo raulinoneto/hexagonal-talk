@@ -12,7 +12,6 @@ func NewService(repo SecondaryPort) PrimaryPort {
 }
 
 func (p *port) Vote(image_id string, vote bool) error {
-	// TODO: check if vote exists
 	v := Vote{image_id, vote}
 	err := p.repo.SaveVote(v)
 	return err

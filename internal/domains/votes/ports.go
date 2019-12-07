@@ -6,5 +6,4 @@ type PrimaryPort interface {
 
 type SecondaryPort interface {
 	SaveVote(vote Vote) error
-	//GetImage(image_id string) error
 }
