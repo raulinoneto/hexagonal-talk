@@ -7,11 +7,6 @@ import (
 	"github.com/lucasrosa/catvotes/internal/domains/votes"
 )
 
-// APIGatewayAdapter is the interface that defines the entrypoints to this adapter
-// type APIGatewayAdapter interface {
-// 	PlaceOrder(request events.APIGatewayProxyRequest) (Response, error)
-// }
-
 type APIGatewayPrimaryAdapter struct {
 	service votes.PrimaryPort
 }
@@ -21,12 +16,6 @@ func NewAPIGatewayPrimaryAdapter(s votes.PrimaryPort) *APIGatewayPrimaryAdapter 
 		s,
 	}
 }
-
-// Response is of type APIGatewayProxyResponse since we're leveraging the
-// AWS Lambda Proxy Request functionality (default behavior)
-//
-// https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
-type Response events.APIGatewayProxyResponse
 
 // PlaceOrder receives the request, processes it and returns a Response or an error
 func (a *APIGatewayPrimaryAdapter) HandleVote(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {

@@ -27,30 +27,6 @@ func (r *votesRepository) SaveVote(v votes.Vote) error {
 
 	svc := dynamodb.New(sess)
 
-	// persistedOrder := PersistedOrder{
-	// 	ID:        order.ID,
-	// 	Email:     order.Email,
-	// 	Amount:    order.Amount,
-	// 	Currency:  order.Currency,
-	// 	ProductID: order.ProductID,
-	// }
-	// fmt.Println("Persisting order:", persistedOrder)
-
-	// Marshall the Item into a Map DynamoDB can deal with
-	// av, err := dynamodbattribute.MarshalMap(v)
-	// if err != nil {
-	// 	fmt.Println("Got error marshalling map:")
-	// 	fmt.Println(err.Error())
-	// 	return err
-	// }
-
-	// // Create Item in table and return
-	// input := &dynamodb.PutItemInput{
-	// 	Item:      av,
-	// 	TableName: aws.String(os.Getenv("TABLE_NAME")),
-	// }
-	//_, err = svc.PutItem(input)
-
 	type ImageKey struct {
 		ImageID string `json:"image_id"`
 	}
