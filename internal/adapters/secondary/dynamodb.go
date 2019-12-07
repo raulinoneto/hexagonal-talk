@@ -37,20 +37,49 @@ func (r *votesRepository) SaveVote(v votes.Vote) error {
 	// fmt.Println("Persisting order:", persistedOrder)
 
 	// Marshall the Item into a Map DynamoDB can deal with
-	av, err := dynamodbattribute.MarshalMap(v)
+	// av, err := dynamodbattribute.MarshalMap(v)
+	// if err != nil {
+	// 	fmt.Println("Got error marshalling map:")
+	// 	fmt.Println(err.Error())
+	// 	return err
+	// }
+
+	// // Create Item in table and return
+	// input := &dynamodb.PutItemInput{
+	// 	Item:      av,
+	// 	TableName: aws.String(os.Getenv("TABLE_NAME")),
+	// }
+	//_, err = svc.PutItem(input)
+
+	type ImageKey struct {
+		ImageID string `json:"image_id"`
+	}
+	key, err := dynamodbattribute.MarshalMap(ImageKey{
+		ImageID: v.ImageID,
+	})
 	if err != nil {
-		fmt.Println("Got error marshalling map:")
+		return err
+	}
+	updateExpression := aws.String("set votes = votes - 1")
+	if v.Vote {
+		updateExpression = aws.String("set votes = votes + 1")
+	}
+
+	input := &dynamodb.UpdateItemInput{
+		Key:              key,
+		TableName:        aws.String(os.Getenv("TABLE_NAME")),
+		UpdateExpression: updateExpression,
+		ReturnValues:     aws.String("UPDATED_NEW"),
+	}
+
+	result, err := svc.UpdateItem(input)
+
+	if err != nil {
 		fmt.Println(err.Error())
 		return err
 	}
 
-	// Create Item in table and return
-	input := &dynamodb.PutItemInput{
-		Item:      av,
-		TableName: aws.String(os.Getenv("TABLE_NAME")),
-	}
-
-	_, err = svc.PutItem(input)
+	fmt.Println("updateitem result", result)
 	if err != nil {
 		fmt.Println("Error while putting message to db", err)
 	} else {

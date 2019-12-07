@@ -1,6 +1,6 @@
 package votes
 
 type Vote struct {
-	image_id string
-	vote     bool
+	ImageID string `json:"image_id"`
+	Vote    bool   `json:"vote"`
 }

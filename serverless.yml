@@ -48,15 +48,11 @@ resources:
       DeletionPolicy: Retain
       Properties:
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: image_id
             AttributeType: S  
-          - AttributeName: email
-            AttributeType: S
         KeySchema:
-          - AttributeName: id
+          - AttributeName: image_id
             KeyType: HASH
-          - AttributeName: email
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

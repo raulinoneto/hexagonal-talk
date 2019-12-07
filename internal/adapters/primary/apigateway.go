@@ -16,8 +16,8 @@ type APIGatewayPrimaryAdapter struct {
 	service votes.PrimaryPort
 }
 
-func NewAPIGatewayPrimaryAdapter(s votes.PrimaryPort) APIGatewayPrimaryAdapter {
-	return &apiGatewayPrimaryAdapter{
+func NewAPIGatewayPrimaryAdapter(s votes.PrimaryPort) *APIGatewayPrimaryAdapter {
+	return &APIGatewayPrimaryAdapter{
 		s,
 	}
 }
@@ -29,26 +29,26 @@ func NewAPIGatewayPrimaryAdapter(s votes.PrimaryPort) APIGatewayPrimaryAdapter {
 type Response events.APIGatewayProxyResponse
 
 // PlaceOrder receives the request, processes it and returns a Response or an error
-func (a *APIGatewayPrimaryAdapter) HandleVote(request events.APIGatewayProxyRequest) (Response, error) {
+func (a *APIGatewayPrimaryAdapter) HandleVote(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	// Verifying the body of the request
 	v := votes.Vote{}
-	err := json.Unmarshal([]byte(request.Body), &order)
+	err := json.Unmarshal([]byte(request.Body), &v)
 	if err != nil {
-		return Response{StatusCode: 400}, nil
+		return events.APIGatewayProxyResponse{StatusCode: 400}, nil
 	}
 
 	// Processing vote
-	err = a.service.Vote(&v)
+	err = a.service.Vote(v.ImageID, v.Vote)
 	if err != nil {
-		return Response{StatusCode: 502}, err
+		return events.APIGatewayProxyResponse{StatusCode: 502}, err
 	}
 
 	return successfulResponse(), nil
 }
 
-func successfulResponse() Response {
-	return Response{
+func successfulResponse() events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{
 		StatusCode:      201,
 		IsBase64Encoded: false,
 		Headers: map[string]string{
