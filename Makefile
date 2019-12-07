@@ -1,7 +1,10 @@
 .PHONY: build clean deploy
 
-build:
-	env GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/votes cmd/vote/*
+build-lambda:
+	env GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/votes cmd/vote/lambda/*
+
+build-cli:
+	env GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o bin/votes cmd/vote/cli/*
 
 test: 
 	env GO111MODULE=on go test ./... -cover
