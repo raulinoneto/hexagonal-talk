@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/lucasrosa/catvotes/internal/domains/votes"
+	"github.com/raulinoneto/catvotes/pkg/domains/votes"
 )
 
 type votesAPI struct {

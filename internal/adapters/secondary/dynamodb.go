@@ -1,6 +1,7 @@
 package secondary
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -8,10 +9,12 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-	"github.com/lucasrosa/catvotes/internal/domains/votes"
+	"github.com/raulinoneto/catvotes/pkg/domains/votes"
 )
 
-type votesRepository struct{}
+type votesRepository struct{
+	ctx context.Context
+}
 
 // NewDynamoRepository instantiates the repository for this adapter
 func NewDynamoRepository() votes.SecondaryPort {

@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/lucasrosa/catvotes/internal/domains/votes"
+	"github.com/raulinoneto/catvotes/pkg/domains/votes"
 )
 
 type CLIPrimaryAdapter struct {

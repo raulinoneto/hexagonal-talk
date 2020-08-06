@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/lucasrosa/catvotes/internal/adapters/primary"
-	"github.com/lucasrosa/catvotes/internal/adapters/secondary"
-	"github.com/lucasrosa/catvotes/internal/domains/votes"
+	"github.com/raulinoneto/catvotes/internal/adapters/primary"
+	"github.com/raulinoneto/catvotes/internal/adapters/secondary"
+	"github.com/raulinoneto/catvotes/pkg/domains/votes"
 )
 
 func main() {
